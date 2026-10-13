@@ -1,19 +1,19 @@
-# @babel/helper-module-transforms
+# @babel/plugin-transform-react-jsx-source
 
-> Babel helper functions for implementing ES6 module transformations
+> Add a __source prop to all JSX Elements
 
-See our website [@babel/helper-module-transforms](https://babeljs.io/docs/babel-helper-module-transforms) for more information.
+See our website [@babel/plugin-transform-react-jsx-source](https://babeljs.io/docs/babel-plugin-transform-react-jsx-source) for more information.
 
 ## Install
 
 Using npm:
 
 ```sh
-npm install --save @babel/helper-module-transforms
+npm install --save-dev @babel/plugin-transform-react-jsx-source
 ```
 
 or using yarn:
 
 ```sh
-yarn add @babel/helper-module-transforms
+yarn add @babel/plugin-transform-react-jsx-source --dev
 ```
