@@ -1,11 +1,4 @@
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-exports.__esModule = true;
-exports.request = exports.cancel = void 0;
-
-var _canUseDOM = _interopRequireDefault(require("./canUseDOM"));
+import canUseDOM from './canUseDOM';
 
 /* https://github.com/component/raf */
 var prev = new Date().getTime();
@@ -26,7 +19,7 @@ var getKey = function getKey(vendor, k) {
   return vendor + (!vendor ? k : k[0].toUpperCase() + k.substr(1)) + "AnimationFrame";
 };
 
-if (_canUseDOM.default) {
+if (canUseDOM) {
   vendors.some(function (vendor) {
     var rafMethod = getKey(vendor, 'request');
 
@@ -42,11 +35,8 @@ if (_canUseDOM.default) {
   });
 }
 
-var cancel = function cancel(id) {
+export var cancel = function cancel(id) {
   // @ts-ignore
   if (typeof window[cancelMethod] === 'function') window[cancelMethod](id);
 };
-
-exports.cancel = cancel;
-var request = rafImpl;
-exports.request = request;
+export var request = rafImpl;

@@ -1,7 +1,3 @@
-"use strict";
-
-exports.__esModule = true;
-exports.default = matches;
 var matchesImpl;
 /**
  * Checks if a given element matches a selector.
@@ -10,7 +6,7 @@ var matchesImpl;
  * @param selector the selector
  */
 
-function matches(node, selector) {
+export default function matches(node, selector) {
   if (!matchesImpl) {
     var body = document.body;
     var nativeMatch = body.matches || body.matchesSelector || body.webkitMatchesSelector || body.mozMatchesSelector || body.msMatchesSelector;
@@ -22,5 +18,3 @@ function matches(node, selector) {
 
   return matchesImpl(node, selector);
 }
-
-module.exports = exports["default"];

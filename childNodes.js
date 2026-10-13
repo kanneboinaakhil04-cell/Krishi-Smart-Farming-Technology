@@ -1,7 +1,3 @@
-"use strict";
-
-exports.__esModule = true;
-exports.default = childNodes;
 var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
 /**
  * Collects all child nodes of an element.
@@ -9,8 +5,6 @@ var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
  * @param node the node
  */
 
-function childNodes(node) {
+export default function childNodes(node) {
   return node ? toArray(node.childNodes) : [];
 }
-
-module.exports = exports["default"];

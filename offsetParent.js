@@ -1,27 +1,17 @@
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-exports.__esModule = true;
-exports.default = offsetParent;
-
-var _css = _interopRequireDefault(require("./css"));
-
-var _ownerDocument = _interopRequireDefault(require("./ownerDocument"));
+import css from './css';
+import ownerDocument from './ownerDocument';
 
 var isHTMLElement = function isHTMLElement(e) {
   return !!e && 'offsetParent' in e;
 };
 
-function offsetParent(node) {
-  var doc = (0, _ownerDocument.default)(node);
+export default function offsetParent(node) {
+  var doc = ownerDocument(node);
   var parent = node && node.offsetParent;
 
-  while (isHTMLElement(parent) && parent.nodeName !== 'HTML' && (0, _css.default)(parent, 'position') === 'static') {
+  while (isHTMLElement(parent) && parent.nodeName !== 'HTML' && css(parent, 'position') === 'static') {
     parent = parent.offsetParent;
   }
 
   return parent || doc.documentElement;
 }
-
-module.exports = exports["default"];

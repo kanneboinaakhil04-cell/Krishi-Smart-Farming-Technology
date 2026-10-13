@@ -1,8 +1,3 @@
-"use strict";
-
-exports.__esModule = true;
-exports.default = contains;
-
 /* eslint-disable no-bitwise, no-cond-assign */
 
 /**
@@ -11,11 +6,9 @@ exports.default = contains;
  * @param context the context element
  * @param node the element to check
  */
-function contains(context, node) {
+export default function contains(context, node) {
   // HTML DOM and SVG DOM may have different support levels,
   // so we need to check on context instead of a document root element.
   if (context.contains) return context.contains(node);
   if (context.compareDocumentPosition) return context === node || !!(context.compareDocumentPosition(node) & 16);
 }
-
-module.exports = exports["default"];

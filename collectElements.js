@@ -1,9 +1,4 @@
-"use strict";
-
-exports.__esModule = true;
-exports.default = collectElements;
-
-function collectElements(node, direction) {
+export default function collectElements(node, direction) {
   var nextNode = null;
   var nodes = [];
   nextNode = node ? node[direction] : null;
@@ -15,5 +10,3 @@ function collectElements(node, direction) {
 
   return nodes;
 }
-
-module.exports = exports["default"];
