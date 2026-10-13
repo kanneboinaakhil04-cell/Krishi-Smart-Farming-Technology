@@ -1,4 +1,4 @@
-import _typeof from "./typeof.js";
+var _typeof = require("./typeof.js")["default"];
 function toPrimitive(t, e) {
   if ("object" != _typeof(t) || !t) return t;
   var r;
@@ -9,4 +9,4 @@ function toPrimitive(t, e) {
   }
   return ("string" === e ? String : Number)(t);
 }
-export { toPrimitive as default };
+module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
