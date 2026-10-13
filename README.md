@@ -1,70 +1,69 @@
-# dom-helpers
+![](./docs/public/og.png)
 
-tiny modular DOM lib for ie9+
+# es-toolkit &middot; [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/toss/es-toolkit/blob/main/LICENSE) [![codecov](https://codecov.io/gh/toss/es-toolkit/graph/badge.svg?token=8N5S3AR3C7)](https://codecov.io/gh/toss/es-toolkit) [![NPM badge](https://img.shields.io/npm/v/es-toolkit?logo=npm)](https://www.npmjs.com/package/es-toolkit) [![JSR badge](https://jsr.io/badges/@es-toolkit/es-toolkit)](https://jsr.io/@es-toolkit/es-toolkit) [![Discord Badge](https://discord.com/api/guilds/1281071127052943361/widget.png?style=shield)](https://discord.gg/vGXbVjP2nY)
 
-## Install
+English | [한국어](https://github.com/toss/es-toolkit/blob/main/README-ko_kr.md) | [简体中文](https://github.com/toss/es-toolkit/blob/main/README-zh_hans.md) | [日本語](https://github.com/toss/es-toolkit/blob/main/README-ja_jp.md)
 
-```sh
-npm i -S dom-helpers
+es-toolkit is a state-of-the-art, high-performance JavaScript utility library with a small bundle size and strong type annotations.
+
+- es-toolkit offers a variety of everyday utility functions with modern implementations, such as [debounce](https://es-toolkit.dev/reference/function/debounce.html), [delay](https://es-toolkit.dev/reference/promise/delay.html), [chunk](https://es-toolkit.dev/reference/array/chunk.html), [sum](https://es-toolkit.dev/reference/math/sum.html), and [pick](https://es-toolkit.dev/reference/object/pick.html).
+- Designed with performance in mind, es-toolkit achieves [2-3× better performance](https://es-toolkit.dev/performance.html) in modern JavaScript environments.
+- es-toolkit supports tree shaking out of the box, and [reduces JavaScript code by up to 97%](https://es-toolkit.dev/bundle-size.html) compared to other libraries.
+- es-toolkit offers a complete compatibility layer to seamlessly replace Lodash, available as [es-toolkit/compat](https://es-toolkit.dev/compatibility.html).
+- es-toolkit includes built-in TypeScript support, with straightforward yet robust types. It also provides useful type guards such as [isNotNil](https://es-toolkit.dev/reference/predicate/isNotNil.html).
+- es-toolkit is trusted and used by popular open-source projects like [Storybook](https://github.com/storybookjs/storybook/blob/9d862798d666678cc4822e857c00bbd744169ced/code/core/package.json#L358), [Recharts](https://github.com/recharts/recharts/blob/0fa4cc325da403b6fa1c6be0f820896ed92f806a/package.json#L94), [ink](https://github.com/vadimdemedes/ink/blob/2090ad9779be59dea71d173eb49785b7bd4495d0/package.json#L55), and [CKEditor](https://github.com/ckeditor/ckeditor5/blob/60d5fac804643cb4d359767ee2f94e3d92d1fcc5/packages/ckeditor5-core/package.json#L53).
+- es-toolkit is battle-tested with 100% test coverage, ensuring reliability and robustness.
+
+## Examples
+
+```tsx
+// import from '@es-toolkit/es-toolkit' in jsr.
+import { chunk, debounce } from 'es-toolkit';
+
+const debouncedLog = debounce(message => {
+  console.log(message);
+}, 300);
+
+// This call will be debounced
+debouncedLog('Hello, world!');
+
+const array = [1, 2, 3, 4, 5, 6];
+const chunkedArray = chunk(array, 2);
+
+console.log(chunkedArray);
+// Output: [[1, 2], [3, 4], [5, 6]]
 ```
 
-Mostly just naive wrappers around common DOM API inconsistencies, Cross browser work is minimal and mostly taken from jQuery. This library doesn't do a lot to normalize behavior across browsers, it mostly seeks to provide a common interface, and eliminate the need to write the same damn `if (ie9)` statements in every project.
+## AI Integration
 
-For example `on()` works in all browsers ie9+ but it uses the native event system so actual event oddities will continue to exist. If you need **robust** cross-browser support, use jQuery. If you are just tired of rewriting:
+es-toolkit provides [Agent Skills](https://skills.sh) for AI coding tools like Claude Code, Cursor, and Copilot.
 
-```js
-if (document.addEventListener)
-  return (node, eventName, handler, capture) =>
-    node.addEventListener(eventName, handler, capture || false)
-else if (document.attachEvent)
-  return (node, eventName, handler) =>
-    node.attachEvent('on' + eventName, handler)
+```bash
+npx skills add toss/es-toolkit
 ```
 
-over and over again, or you need a ok `getComputedStyle` polyfill but don't want to include all of jQuery, use this.
+For Claude Code, you can also install via the plugin marketplace:
 
-dom-helpers does expect certain, polyfillable, es5 features to be present for which you can use `es5-shim` where needed
-
-The real advantage to this collection is that any method can be required individually, meaning bundlers like webpack will only include the exact methods you use. This is great for environments where jQuery doesn't make sense, such as `React` where you only occasionally need to do direct DOM manipulation.
-
-All methods are exported as a flat namesapce
-
-```js
-var helpers = require('dom-helpers')
-var offset = require('dom-helpers/offset')
-
-// style is a function
-require('dom-helpers/css')(node, { width: '40px' })
+```
+/plugin marketplace add toss/es-toolkit
+/plugin install es-toolkit@es-toolkit-plugin
 ```
 
-- dom-helpers
-  - `ownerDocument(element)`: returns the element's document owner
-  - `ownerWindow(element)`: returns the element's document window
-  - `activeElement`: return focused element safely
-  - `querySelectorAll(element, selector)`: optimized qsa, uses `getElementBy{Id|TagName|ClassName}` if it can.
-  - `contains(container, element)`
-  - `height(element, useClientHeight)`
-  - `width(element, useClientWidth)`
-  - `matches(element, selector)`
-  - `offset(element)` -> `{ top: Number, left: Number, height: Number, width: Number}`
-  - `offsetParent(element)`: return the parent node that the element is offset from
-  - `position(element, [offsetParent]`: return "offset" of the node to its offsetParent, optionally you can specify the offset parent if different than the "real" one
-  - `scrollTop(element, [value])`
-  - `scrollLeft(element, [value])`
-  - `scrollParent(element)`
-  - `addClass(element, className)`
-  - `removeClass(element, className)`
-  - `hasClass(element, className)`
-  - `toggleClass(element, className)`
-  - `style(element, propName)` or `style(element, objectOfPropValues)`
-  - `getComputedStyle(element)` -> `getPropertyValue(name)`
-  - `animate(node, properties, duration, easing, callback)` programmatically start css transitions
-  - `transitionEnd(node, handler, [duration], [padding])` listens for transition end, and ensures that the handler if called even if the transition fails to fire its end event. Will attempt to read duration from the element, otherwise one can be provided
-  - `addEventListener(node, eventName, handler, [options])`:
-  - `removeEventListener(node, eventName, handler, [options])`:
-  - `listen(node, eventName, handler, [options])`: wraps `addEventlistener` and returns a function that calls `removeEventListener` for you
-  - `filter(selector, fn)`: returns a function handler that only fires when the target matches or is contained in the selector ex: `on(list, 'click', filter('li > a', handler))`
-  - `requestAnimationFrame(cb)` returns an ID for canceling
-  - `cancelAnimationFrame(id)`
-  - `scrollbarSize([recalc])` returns the scrollbar's width size in pixels
-  - `scrollTo(element, [scrollParent])`
+For more details, see the [AI Integration guide](https://es-toolkit.dev/ai-integration.html).
+
+## Contributing
+
+We welcome contributions from everyone in the community. Read below for a detailed contribution guide.
+
+[CONTRIBUTING](https://github.com/toss/es-toolkit/blob/main/.github/CONTRIBUTING.md)
+
+## License
+
+MIT © Viva Republica, Inc. See [LICENSE](./LICENSE) for details.
+
+<a title="Toss" href="https://toss.im">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://static.toss.im/logos/png/4x/logo-toss-reverse.png">
+    <img alt="Toss" src="https://static.toss.im/logos/png/4x/logo-toss.png" width="100">
+  </picture>
+</a>
