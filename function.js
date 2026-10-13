@@ -1,1 +1,2 @@
-module.exports = require('./dist/function');
+var convert = require('./convert');
+module.exports = convert(require('../function'));

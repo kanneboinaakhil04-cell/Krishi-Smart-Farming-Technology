@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/array/forEach.js').forEach;
+var convert = require('./convert'),
+    func = convert('forEach', require('../forEach'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

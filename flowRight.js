@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/function/flowRight.js').flowRight;
+var convert = require('./convert'),
+    func = convert('flowRight', require('../flowRight'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

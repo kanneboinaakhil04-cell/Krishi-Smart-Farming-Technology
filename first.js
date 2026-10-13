@@ -1,1 +1,1 @@
-module.exports = require('../dist/compat/array/head.js').head;
+module.exports = require('./head');

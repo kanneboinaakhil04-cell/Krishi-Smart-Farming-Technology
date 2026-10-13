@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/object/fromPairs.js').fromPairs;
+var convert = require('./convert'),
+    func = convert('fromPairs', require('../fromPairs'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

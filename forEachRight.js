@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/array/forEachRight.js').forEachRight;
+var convert = require('./convert'),
+    func = convert('forEachRight', require('../forEachRight'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

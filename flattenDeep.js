@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/array/flattenDeep.js').flattenDeep;
+var convert = require('./convert'),
+    func = convert('flattenDeep', require('../flattenDeep'), require('./_falseOptions'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

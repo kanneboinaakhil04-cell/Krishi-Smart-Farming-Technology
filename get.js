@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/object/get.js').get;
+var convert = require('./convert'),
+    func = convert('get', require('../get'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

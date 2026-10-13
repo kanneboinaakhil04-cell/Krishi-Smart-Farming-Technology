@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/util/defaultTo.js').defaultTo;
+var convert = require('./convert'),
+    func = convert('defaultTo', require('../defaultTo'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;

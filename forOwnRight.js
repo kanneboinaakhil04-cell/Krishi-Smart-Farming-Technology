@@ -1,1 +1,5 @@
-module.exports = require('../dist/compat/object/forOwnRight.js').forOwnRight;
+var convert = require('./convert'),
+    func = convert('forOwnRight', require('../forOwnRight'));
+
+func.placeholder = require('./placeholder');
+module.exports = func;
