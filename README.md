@@ -1,19 +1,19 @@
-# @babel/compat-data
+# @babel/helper-module-transforms
 
-> The compat-data to determine required Babel plugins
+> Babel helper functions for implementing ES6 module transformations
 
-See our website [@babel/compat-data](https://babeljs.io/docs/babel-compat-data) for more information.
+See our website [@babel/helper-module-transforms](https://babeljs.io/docs/babel-helper-module-transforms) for more information.
 
 ## Install
 
 Using npm:
 
 ```sh
-npm install --save @babel/compat-data
+npm install --save @babel/helper-module-transforms
 ```
 
 or using yarn:
 
 ```sh
-yarn add @babel/compat-data
+yarn add @babel/helper-module-transforms
 ```
