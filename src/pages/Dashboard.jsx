@@ -8,6 +8,7 @@ import {
   LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, BarChart, Bar, Legend
 } from 'recharts'
+import { useFarmer } from '../context/FarmerContext'
 
 /* ──────────────────────────────────────────
    Demo Data Generator
@@ -111,6 +112,7 @@ function MetricCard({ icon, iconBg, iconColor, value, unit, label, status, statu
    Main Dashboard Component
 ────────────────────────────────────────── */
 export default function Dashboard() {
+  const { farmer } = useFarmer()
   const [selectedCrop, setSelectedCrop] = useState('Wheat')
   const [irrigationOn, setIrrigationOn] = useState(false)
   const [lastUpdated, setLastUpdated] = useState(new Date())
@@ -200,11 +202,27 @@ export default function Dashboard() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
             <div>
+              {farmer?.name && (
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  padding: '0.25rem 0.8rem',
+                  borderRadius: '999px',
+                  fontSize: '0.8rem',
+                  color: '#86efac',
+                  fontWeight: 700,
+                  marginBottom: '0.5rem'
+                }}>
+                  🌾 Namaste, {farmer.name}! {farmer.district ? `(${farmer.district.split(',')[0]})` : ''}
+                </div>
+              )}
               <h1>
                 <Wifi size={24} style={{ marginRight: 10, verticalAlign: 'middle' }} />
                 Field Dashboard
               </h1>
-              <p>Real-time monitoring of your farm's key parameters</p>
+              <p>Real-time field monitoring for {farmer?.name ? `${farmer.name}'s Farm` : "your farm's key parameters"}</p>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
               <div style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 50, padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.82rem', color: 'rgba(255,255,255,0.8)' }}>

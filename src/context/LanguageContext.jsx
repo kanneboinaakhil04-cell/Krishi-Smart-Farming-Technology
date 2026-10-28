@@ -18,6 +18,14 @@ export const TRANSLATIONS = {
     takePlantPic: 'Take Plant Pic',
     switchFarmer: 'Exit / Login',
     helpDesk: 'Help Desk',
+    welcomeFarmer: 'Welcome back',
+    namaste: 'Namaste',
+    farmerProfile: 'Farmer Profile',
+    editProfile: 'Edit Farmer Details',
+    saveProfile: 'Save Changes',
+    villageDistrict: 'Village / District',
+    farmSize: 'Farm Land Size',
+    enterFarmerName: 'Enter your full name',
 
     // Nav & Sidebar
     home: 'Home & Overview',
@@ -70,6 +78,14 @@ export const TRANSLATIONS = {
     takePlantPic: 'మొక్క ఫోటో తీయండి',
     switchFarmer: 'లాగ్అవుట్ / రైతు మార్పు',
     helpDesk: 'రైతు సహాయ కేంద్రం',
+    welcomeFarmer: 'స్వాగతం',
+    namaste: 'నమస్కారం',
+    farmerProfile: 'రైతు ప్రొఫైల్',
+    editProfile: 'రైతు వివరాలు సవరించండి',
+    saveProfile: 'మార్పులను భద్రపరచండి',
+    villageDistrict: 'గ్రామం / జిల్లా',
+    farmSize: 'వ్యవసాయ భూమి (ఎకరాలు)',
+    enterFarmerName: 'మీ పూర్తి పేరు నమోదు చేయండి',
 
     // Nav & Sidebar
     home: 'హోమ్ & అవలోకనం',
@@ -122,6 +138,14 @@ export const TRANSLATIONS = {
     takePlantPic: 'पौधे की फोटो लें',
     switchFarmer: 'लॉगआउट / किसान बदलें',
     helpDesk: 'किसान हेल्पलाइन',
+    welcomeFarmer: 'स्वागत है',
+    namaste: 'नमस्ते',
+    farmerProfile: 'किसान प्रोफ़ाइल',
+    editProfile: 'किसान विवरण संपादित करें',
+    saveProfile: 'बदलाव सहेजें',
+    villageDistrict: 'गांव / जिला',
+    farmSize: 'खेत का आकार (एकड़)',
+    enterFarmerName: 'अपना पूरा नाम दर्ज करें',
 
     // Nav & Sidebar
     home: 'होम और विवरण',

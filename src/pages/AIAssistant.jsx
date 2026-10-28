@@ -5,6 +5,7 @@ import {
   Sparkles, X, ChevronRight, HelpCircle, PhoneCall, Info
 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer } from '../context/FarmerContext'
 
 // Sample diseased and healthy plant library for instant 1-click testing (English)
 const SAMPLE_PLANTS_EN = [
@@ -144,11 +145,12 @@ const SAMPLE_PLANTS_TE = [
 
 export default function AIAssistant() {
   const { lang } = useLanguage()
+  const { farmer } = useFarmer()
   const samplePlants = lang === 'te' ? SAMPLE_PLANTS_TE : SAMPLE_PLANTS_EN
 
   const initialBotText = lang === 'te'
-    ? "👋 నమస్కారం! నేను **కృషి AI మొక్కల డాక్టర్ & వ్యవసాయ నిపుణుడిని**.\n\nపై భాగంలో మీ పంట ఆకు లేదా కాయ ఫోటో తీసి అప్‌లోడ్ చేయండి, లేదా పంటల నిర్వహణ, తెగుళ్ల నివారణ, సాగునీటి పద్ధతులు మరియు మార్కెట్ ధరల గురించి నన్ను ఏదైనా ప్రశ్న అడగండి!\n\n💡 *చిట్కా: వ్యాధి నిర్ధారణను తక్షణమే పరీక్షించడానికి పైన ఉన్న నమూనా ఆకులలో ఒకదానిపై క్లిక్ చేయవచ్చు.*"
-    : "👋 Namaste! I am **Krishi AI Plant Doctor & Agronomist**.\n\nTake or upload a photo of your affected plant leaf, crop, or fruit above, or ask me any question about crop management, diseases, irrigation schedules, or mandi market rates!\n\n💡 *Tip: You can click any sample photo above to test plant disease diagnosis immediately.*"
+    ? `👋 నమస్కారం ${farmer?.name ? `${farmer.name} గారు` : 'రైతు మిత్రమా'}! నేను **కృషి AI మొక్కల డాక్టర్ & వ్యవసాయ నిపుణుడిని**.\n\nపై భాగంలో మీ పంట ఆకు లేదా కాయ ఫోటో తీసి అప్‌లోడ్ చేయండి, లేదా పంటల నిర్వహణ, తెగుళ్ల నివారణ, సాగునీటి పద్ధతులు మరియు మార్కెట్ ధరల గురించి నన్ను ఏదైనా ప్రశ్న అడగండి!\n\n💡 *చిట్కా: వ్యాధి నిర్ధారణను తక్షణమే పరీక్షించడానికి పైన ఉన్న నమూనా ఆకులలో ఒకదానిపై క్లిక్ చేయవచ్చు.*`
+    : `👋 Namaste ${farmer?.name || 'Farmer'}! I am **Krishi AI Plant Doctor & Agronomist**.\n\nTake or upload a photo of your affected crop leaf, stem, or fruit above, or ask me any question about crop management, diseases, irrigation schedules, or mandi market rates!\n\n💡 *Tip: You can click any sample photo above to test plant disease diagnosis immediately.*`
 
   const [messages, setMessages] = useState([
     {
@@ -165,7 +167,7 @@ export default function AIAssistant() {
   const fileInputRef = useRef(null)
   const endRef = useRef(null)
 
-  // Update initial message when language changes
+  // Update initial message when language or farmer changes
   useEffect(() => {
     setMessages([
       {
@@ -174,7 +176,7 @@ export default function AIAssistant() {
         text: initialBotText
       }
     ])
-  }, [lang])
+  }, [lang, farmer?.name])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -302,7 +304,7 @@ export default function AIAssistant() {
         boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)',
       }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(34, 197, 94, 0.2)', padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.85rem', color: '#4ade80', marginBottom: '1rem', fontWeight: 600 }}>
-          <Sparkles size={16} /> {lang === 'te' ? 'కృషి AI • మొక్కల డాక్టర్ & వ్యవసాయ నిపుణుడు' : 'Krishi AI • Plant Doctor & Agronomist'}
+          <Sparkles size={16} /> {farmer?.name ? `${farmer.name} • ` : ''}{lang === 'te' ? 'కృషి AI • మొక్కల డాక్టర్ & వ్యవసాయ నిపుణుడు' : 'Krishi AI • Plant Doctor & Agronomist'}
         </div>
         <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
           {lang === 'te' ? 'AI మొక్కల డాక్టర్ & రైతు చాట్‌బాట్' : 'AI Plant Doctor & Farm Chatbot'}

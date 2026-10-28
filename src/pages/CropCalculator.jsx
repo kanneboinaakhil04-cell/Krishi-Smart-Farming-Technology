@@ -7,6 +7,7 @@ import {
 import {
   CROP_DB, calculateWaterNeeds, calculatePlantCount
 } from '../data/cropDatabase'
+import { useFarmer } from '../context/FarmerContext'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell
@@ -83,7 +84,7 @@ function WaterNeedsChart({ water, cropColor }) {
       <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#f0fdf4" />
         <XAxis dataKey="label" tick={{ fontSize: 11 }} />
-        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => v >= 1000 ? `${(v/1000).toFixed(0)}k` : v} />
+        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v} />
         <Tooltip
           formatter={(v) => [`${v.toLocaleString()} L`, 'Water needed']}
           contentStyle={{ borderRadius: 10, fontSize: '0.82rem' }}
@@ -98,8 +99,17 @@ function WaterNeedsChart({ water, cropColor }) {
 }
 
 export default function CropCalculator() {
+  const { farmer } = useFarmer()
+  const defaultAcres = useMemo(() => {
+    if (farmer?.farmSize) {
+      const match = farmer.farmSize.match(/[\d.]+/)
+      if (match) return parseFloat(match[0])
+    }
+    return 1
+  }, [farmer?.farmSize])
+
   const [selectedCrop, setSelectedCrop] = useState('Mango')
-  const [areaAcres, setAreaAcres] = useState(1)
+  const [areaAcres, setAreaAcres] = useState(defaultAcres)
   const [category, setCategory] = useState('All')
 
   const crop = CROP_DB[selectedCrop]
@@ -124,10 +134,11 @@ export default function CropCalculator() {
         <div className="container">
           <span className="section-badge" style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: '#86efac', marginBottom: '1rem' }}>
             <Calculator size={14} />
-            Field Planning Tool
+            {farmer?.name ? `${farmer.name}'s Field Planning Tool` : 'Field Planning Tool'}
           </span>
           <h1>Crop Planting Calculator</h1>
           <p>
+            {farmer?.name ? `Tailored for ${farmer.name}'s farm (${farmer.district || 'Agro Zone'}). ` : ''}
             Enter your crop and land area to get real-world planting density,
             water requirements, fertiliser needs, and IoT sensor thresholds.
           </p>
@@ -335,10 +346,10 @@ export default function CropCalculator() {
               {/* ── IoT Sensor Thresholds ── */}
               <div className="card" style={{ padding: '2rem' }} id="sensor-thresholds-card">
                 <h4 style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.5rem' }}>
-                  <Zap size={18} color="#f59e0b" /> IoT Sensor Thresholds for {selectedCrop}
+                  <Zap size={18} color="#f50b1fff" /> IoT Sensor Thresholds for {selectedCrop}
                 </h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-                  Configure your IoT sensors to these optimal ranges. Krishi will alert you when readings fall outside these windows.
+                  Configure your IoT sensors to these optimal ranges. AgriNex will alert you when readings fall outside these windows.
                 </p>
 
                 {/* Soil Moisture */}
@@ -441,7 +452,7 @@ export default function CropCalculator() {
                 ))}
                 <div style={{ marginTop: '1rem', padding: '12px', background: '#fef3c7', borderRadius: 10, border: '1px solid #fde68a', fontSize: '0.78rem', color: '#92400e' }}>
                   <Info size={13} style={{ marginRight: 5, verticalAlign: 'middle' }} />
-                  When soil humidity {'>'} {crop.humidityOptimalMax}% for more than 3 days, your Krishi dashboard will trigger a fungal disease risk alert automatically.
+                  When soil humidity {'>'} {crop.humidityOptimalMax}% for more than 3 days, your AgriNex dashboard will trigger a fungal disease risk alert automatically.
                 </div>
               </div>
 

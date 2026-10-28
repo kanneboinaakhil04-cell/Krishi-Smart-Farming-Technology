@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { CROP_GROWTH_GUIDES, CROP_SEASONS, CROP_GROWTH_GUIDES_TE, CROP_SEASONS_TE } from '../data/cropGrowthData'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer } from '../context/FarmerContext'
 
 const ICON_MAP = {
   Tractor: Tractor,
@@ -22,6 +23,7 @@ const ICON_MAP = {
 
 export default function CropGuidePage() {
   const { lang, t } = useLanguage()
+  const { farmer } = useFarmer()
   const [selectedCropId, setSelectedCropId] = useState('rice')
   const [seasonFilter, setSeasonFilter] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -68,7 +70,7 @@ export default function CropGuidePage() {
       }}>
         <div style={{ position: 'relative', zIndex: 2 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(34, 197, 94, 0.2)', padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.85rem', color: '#4ade80', marginBottom: '1rem', fontWeight: 600 }}>
-            <BookOpen size={16} /> {lang === 'te' ? 'కృషి వ్యవసాయ మాస్టర్‌క్లాస్ • సమగ్ర సాగు మార్గదర్శకాలు' : 'Krishi Agronomy Masterclass • Complete Cultivation Guides'}
+            <BookOpen size={16} /> {farmer?.name ? `${farmer.name} • ` : ''}{lang === 'te' ? 'కృషి వ్యవసాయ మాస్టర్‌క్లాస్ • సమగ్ర సాగు మార్గదర్శకాలు' : 'Krishi Agronomy Masterclass • Complete Cultivation Guides'}
           </div>
           <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
             {lang === 'te' ? 'పంటల సాగు పూర్తి గైడ్ — స్టెప్-బై-స్టెప్ విధానం' : 'How to Grow Crops — Step-by-Step Field Guide'}

@@ -6,9 +6,11 @@ import {
 } from 'lucide-react'
 import { KISAN_SCHEMES_EN, KISAN_SCHEMES_TE } from '../data/kisanSchemesData'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer } from '../context/FarmerContext'
 
 export default function KisanSchemesPage() {
   const { lang } = useLanguage()
+  const { farmer } = useFarmer()
   const schemes = lang === 'te' ? KISAN_SCHEMES_TE : KISAN_SCHEMES_EN
 
   const [search, setSearch] = useState('')
@@ -38,7 +40,7 @@ export default function KisanSchemesPage() {
         boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)',
       }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(34, 197, 94, 0.2)', padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.85rem', color: '#4ade80', marginBottom: '1rem', fontWeight: 600 }}>
-          <Landmark size={16} /> {lang === 'te' ? 'రైతు సంక్షేమ పథకాలు & సబ్సిడీ కేంద్రం' : 'Govt Kisan Schemes & Direct Subsidies Hub'}
+          <Landmark size={16} /> {farmer?.name ? `${farmer.name} • ` : ''}{lang === 'te' ? 'రైతు సంక్షేమ పథకాలు & సబ్సిడీ కేంద్రం' : 'Govt Kisan Schemes & Direct Subsidies Hub'}
         </div>
         <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
           {lang === 'te' ? 'రైతు ప్రభుత్వ పథకాలు & సబ్సిడీల పోర్టల్' : 'Government Agricultural Schemes & Subsidies'}

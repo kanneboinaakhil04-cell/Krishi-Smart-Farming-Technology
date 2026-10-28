@@ -11,9 +11,11 @@ import {
 } from 'recharts'
 import { MANDI_COMMODITIES, MANDI_COMMODITIES_TE } from '../data/mandiPriceData'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer } from '../context/FarmerContext'
 
 export default function MandiPricePage() {
   const { lang, t } = useLanguage()
+  const { farmer } = useFarmer()
   const initialCommodities = lang === 'te' ? MANDI_COMMODITIES_TE : MANDI_COMMODITIES
 
   const [selectedCommodityId, setSelectedCommodityId] = useState('rice_paddy')
@@ -122,7 +124,7 @@ export default function MandiPricePage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(34, 197, 94, 0.2)', padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.85rem', color: '#4ade80', marginBottom: '1rem', fontWeight: 600 }}>
-              <Store size={16} /> {lang === 'te' ? 'కృషి మార్కెట్ ఇంటెలిజెన్స్ • లైవ్ APMC రోజువారీ మార్కెట్ ధరలు' : 'Krishi Mandi Intelligence • Real-Time Daily APMC Price Feeds'}
+              <Store size={16} /> {farmer?.name ? `${farmer.name} • ` : ''}{lang === 'te' ? 'కృషి మార్కెట్ ఇంటెలిజెన్స్ • లైవ్ APMC రోజువారీ మార్కెట్ ధరలు' : 'Krishi Mandi Intelligence • Real-Time Daily APMC Price Feeds'}
             </div>
             <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
               {lang === 'te' ? 'లైవ్ మార్కెట్ ధరలు & పంట లాభం కాలిక్యులేటర్' : 'Live Daily Mandi Prices & Profit Calculator'}

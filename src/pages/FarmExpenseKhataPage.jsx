@@ -5,6 +5,7 @@ import {
   PieChart as PieChartIcon
 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer } from '../context/FarmerContext'
 
 const INITIAL_EXPENSES_EN = [
   { id: 1, date: '2026-10-01', category: 'Seeds', title: 'Paddy BPT-5204 Seed Bags (60 kg)', amount: 4800, type: 'expense' },
@@ -24,6 +25,7 @@ const INITIAL_EXPENSES_TE = [
 
 export default function FarmExpenseKhataPage() {
   const { lang } = useLanguage()
+  const { farmer } = useFarmer()
 
   const [records, setRecords] = useState(() => {
     const saved = localStorage.getItem('krishi_khata_records')
@@ -91,10 +93,11 @@ export default function FarmExpenseKhataPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(34, 197, 94, 0.2)', padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.85rem', color: '#4ade80', marginBottom: '1rem', fontWeight: 600 }}>
-              <BookOpen size={16} /> {lang === 'te' ? 'రైతు డిజిటల్ లెడ్జర్ • ఖతా పుస్తకం' : 'Farmer Digital Khata • Expense & Profit Ledger'}
+              <BookOpen size={16} /> {farmer?.name ? `${farmer.name} • ` : ''}{lang === 'te' ? 'రైతు డిజిటల్ లెడ్జర్ • ఖతా పుస్తకం' : 'Farmer Digital Khata • Expense & Profit Ledger'}
             </div>
             <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
-              {lang === 'te' ? 'రైతు పంట ఖర్చుల ఖతా (లెడ్జర్)' : 'Farm Expense & Crop Profit Khata'}
+              {farmer?.name ? (lang === 'te' ? `${farmer.name} గారి ` : `${farmer.name}'s `) : ''}
+              {lang === 'te' ? 'పంట ఖర్చుల ఖతా (లెడ్జర్)' : 'Farm Expense & Crop Profit Khata'}
             </h1>
             <p style={{ color: '#cbd5e1', maxWidth: '750px', fontSize: '1.05rem', lineHeight: 1.6 }}>
               {lang === 'te'

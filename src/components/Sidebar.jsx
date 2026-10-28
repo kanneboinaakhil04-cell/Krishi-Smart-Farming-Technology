@@ -7,11 +7,16 @@ import {
   Bell, HelpCircle
 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer, getFarmerInitials } from '../context/FarmerContext'
 
 export default function Sidebar({ collapsed, setCollapsed }) {
   const location = useLocation()
   const { t } = useLanguage()
+  const { farmer } = useFarmer()
   const isLoginPage = location.pathname === '/' || location.pathname === '/login'
+
+  const farmerName = farmer?.name || 'Kisan Mitra'
+  const initials = getFarmerInitials(farmerName)
 
   const sidebarItems = [
     { to: '/home',        icon: <Leaf size={18} />,            label: t.home || 'Home & Overview',   badge: 'Home' },
@@ -132,6 +137,72 @@ export default function Sidebar({ collapsed, setCollapsed }) {
             >
               <ChevronRight size={16} />
             </button>
+            <div
+              title={`Farmer: ${farmerName}`}
+              style={{
+                margin: '0.5rem auto 0',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800,
+                fontSize: '0.75rem',
+                color: '#fff',
+                cursor: 'pointer'
+              }}
+            >
+              {initials}
+            </div>
+          </div>
+        )}
+
+        {/* Farmer Profile Badge */}
+        {!collapsed && (
+          <div style={{
+            margin: '0.85rem 0.85rem 0.25rem',
+            padding: '0.65rem 0.85rem',
+            background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(21, 128, 61, 0.18))',
+            border: '1px solid rgba(74, 222, 128, 0.25)',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.65rem'
+          }}>
+            <div style={{
+              width: '34px',
+              height: '34px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 800,
+              fontSize: '0.8rem',
+              color: '#fff',
+              flexShrink: 0,
+              boxShadow: '0 2px 8px rgba(34, 197, 94, 0.3)'
+            }}>
+              {initials}
+            </div>
+            <div style={{ overflow: 'hidden', flex: 1, minWidth: 0 }}>
+              <div style={{
+                fontSize: '0.84rem',
+                fontWeight: 800,
+                color: '#fff',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
+                {farmerName}
+              </div>
+              <div style={{ fontSize: '0.68rem', color: '#86efac', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
+                {farmer?.district ? farmer.district.split(',')[0] : 'Verified Farmer'}
+              </div>
+            </div>
           </div>
         )}
 

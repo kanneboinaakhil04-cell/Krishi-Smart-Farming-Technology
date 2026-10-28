@@ -9,6 +9,7 @@ import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, LineChart, Line, Legend
 } from 'recharts'
+import { useFarmer } from '../context/FarmerContext'
 
 // Pre-configured agricultural locations with coordinates
 const AGRI_LOCATIONS = [
@@ -36,7 +37,9 @@ function decodeWmo(code) {
 }
 
 export default function WeatherPage() {
-  const [selectedLocation, setSelectedLocation] = useState(AGRI_LOCATIONS[0])
+  const { farmer } = useFarmer()
+  const initialLoc = (farmer?.district && AGRI_LOCATIONS.find(l => farmer.district.toLowerCase().includes(l.name.split(',')[0].toLowerCase()))) || AGRI_LOCATIONS[1]
+  const [selectedLocation, setSelectedLocation] = useState(initialLoc)
   const [isLiveGps, setIsLiveGps] = useState(false)
   const [loading, setLoading] = useState(true)
   const [weatherData, setWeatherData] = useState(null)
@@ -166,7 +169,7 @@ export default function WeatherPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(56, 189, 248, 0.2)', padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.85rem', color: '#7dd3fc', marginBottom: '1rem', fontWeight: 600 }}>
-              <Navigation size={16} /> Live Satellite Weather & Soil Telemetry Service (Open-Meteo)
+              <Navigation size={16} /> {farmer?.name ? `${farmer.name}'s Farm Weather • ` : ''}Live Satellite Weather & Soil Telemetry Service (Open-Meteo)
             </div>
             <h1 style={{ fontSize: '2.4rem', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
               Live Agricultural Weather & Soil Radar

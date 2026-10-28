@@ -7,6 +7,7 @@ import {
   Calculator, Activity, BookOpen, Store, Camera, Sparkles
 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { useFarmer } from '../context/FarmerContext'
 
 const FEATURES = [
   {
@@ -143,6 +144,7 @@ function StarRating({ count }) {
 
 export default function Home() {
   const { t } = useLanguage()
+  const { farmer } = useFarmer()
 
   const scrollToFeatures = () => {
     document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
@@ -159,6 +161,31 @@ export default function Home() {
         </div>
 
         <div className="hero-content">
+          {farmer?.name && (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'rgba(34, 197, 94, 0.18)',
+              border: '1px solid rgba(74, 222, 128, 0.45)',
+              padding: '0.45rem 1.1rem',
+              borderRadius: '999px',
+              fontSize: '0.9rem',
+              color: '#86efac',
+              fontWeight: 700,
+              marginBottom: '1rem',
+              backdropFilter: 'blur(8px)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.2)'
+            }}>
+              <span>🌾 {t.namaste || 'Namaste'}, {farmer.name}!</span>
+              {farmer.district && (
+                <span style={{ color: '#cbd5e1', fontSize: '0.8rem', fontWeight: 500 }}>
+                  • {farmer.district.split(',')[0]} {farmer.farmSize ? `(${farmer.farmSize})` : ''}
+                </span>
+              )}
+            </div>
+          )}
+
           <div className="hero-badge">
             <span className="dot" />
             {t.heroBadge || 'Krishi Smart Agriculture Technology Platform'}
